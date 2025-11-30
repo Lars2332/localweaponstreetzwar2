@@ -5,11 +5,18 @@ local player = Players.LocalPlayer
 local backpack = player:WaitForChild("Backpack")
 local weaponName = "Glock Drum"
 
-local weapon = ReplicatedStorage:FindFirstChild(weaponName)
+-- Poczekaj aż broń na pewno się załaduje
+local function waitForWeapon(name)
+    local item = ReplicatedStorage:WaitForChild(name, 5) -- 5 sekund czekania
+    if not item then
+        warn("Nie znaleziono modelu: ".. name)
+    end
+    return item
+end
+
+local weapon = waitForWeapon(weaponName)
 
 if weapon then
     local clone = weapon:Clone()
     clone.Parent = backpack
-else
-    warn("Nie znaleziono broni w ReplicatedStorage: " .. weaponName)
 end
