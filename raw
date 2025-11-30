@@ -1,22 +1,18 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
-local backpack = player:WaitForChild("Backpack")
-local weaponName = "Glock Drum"
 
--- Poczekaj aż broń na pewno się załaduje
-local function waitForWeapon(name)
-    local item = ReplicatedStorage:WaitForChild(name, 5) -- 5 sekund czekania
-    if not item then
-        warn("Nie znaleziono modelu: ".. name)
+-- Poczekaj, aż leaderstats się załadują
+local leaderstats = player:WaitForChild("leaderstats", 5)
+
+if leaderstats then
+    local xp = leaderstats:FindFirstChild("XP")
+    if xp then
+        xp.Value = xp.Value + 1000
+        print("Dodano 1000 XP lokalnie! Nowa wartość: " .. xp.Value)
+    else
+        warn("Nie znaleziono zmiennej XP w leaderstats")
     end
-    return item
-end
-
-local weapon = waitForWeapon(weaponName)
-
-if weapon then
-    local clone = weapon:Clone()
-    clone.Parent = backpack
+else
+    warn("Nie znaleziono leaderstats")
 end
