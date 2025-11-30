@@ -1,0 +1,15 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local backpack = player:WaitForChild("Backpack")
+local weaponName = "Glock Drum"
+
+local weapon = ReplicatedStorage:FindFirstChild(weaponName)
+
+if weapon then
+    local clone = weapon:Clone()
+    clone.Parent = backpack
+else
+    warn("Nie znaleziono broni w ReplicatedStorage: " .. weaponName)
+end
